@@ -215,7 +215,7 @@ If your file doesn't have "RawFormat" as `TRF_HDRFloat`, then something in the D
 
 9. Rename your XBM file to `cp2077_gen_lut_nge_v017.xbm`.
 10. Place it in `archive/base/weather/24h_basic/luts` folder.
-11. On the top menu, click "Pack Mod". You'll find it in "packed" folder of your WolvenKit project. Install your mod as usual.
+11. On the top menu, click "Pack Mod". You'll find `.zip` file in your project folder of your WolvenKit project (or use one from "packed" folder). Install your mod as usual.
 
 Your LUT is correctly set up now. You can launch & try!
 
