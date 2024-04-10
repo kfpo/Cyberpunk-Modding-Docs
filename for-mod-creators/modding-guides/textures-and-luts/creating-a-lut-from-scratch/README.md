@@ -149,13 +149,18 @@ Right click on the LUT picture and save your image as a TGA or PNG file.
 
 ### NVIDIA Texture Tools
 
-Drag on your exported file onto the NVTT window and tick off "Generate Mipmaps" and select format as 32x4f. Tick off KTX2 compression and tick on DXT10 header as well turn on Highest compression quality.
-
-Turn on "Extract From Atlas" and set "Depth of Volume" to the exact size of your LUT that you set up when first creating it. To verify you got it right, you should see a Z slider on the top right of the NVTT interface. Drag it and see if there is any vertical shift in the texture. If there is not, you got it right.
+1. Drag on your exported file onto the NVTT window
+2. "Format" -> 32x4f
+3. "Extract From Atlas" -> on
+4. "Depth of Volume in Atlas" -> size of your LUT (same as you used above. If you forgot - open LUT as image & see its width in px - 32/48/64). Drag Z slider in top-right - should be no vertical movement.
+5. "Regenerate Mipmaps" -> off
+6. "Compression Effort" -> "Highest"
+7. "DDS: Use DXT10 Header" -> on
+8. "KTX2: Zstandard Supercompression" -> off
+9. "Save as" (button from bottom-right) -> select .dds file (or type name with .dds)
+10. Put that .dds file in the folder that was generated after you exported the XBM file at the start of the article.
 
 <figure><img src="../../../../.gitbook/assets/image (76).png" alt=""><figcaption><p>NVTT correctly set up with the RCM (Resolve Color Managed) LUT in it.</p></figcaption></figure>
-
-Save as a DDS file (only DDS) and put it in the folder that was generated after you exported the XBM file at the start of the article.&#x20;
 
 ### WolvenKit again
 
