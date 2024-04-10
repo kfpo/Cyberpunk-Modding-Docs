@@ -158,7 +158,7 @@ This is the final stage. We now just need to output to an image, and use the rig
 
 Right click on the LUT picture and save your image as a TGA or PNG file.
 
-### NVIDIA Texture Tools
+### NVIDIA Texture Tools (NVTT)
 
 With preset:
 
@@ -170,17 +170,17 @@ With preset:
 
    Save & change (rename) file's extension to `.dpf`
 
-2. Open NVDA tool & load your LUT
+2. Open NVTT & load your LUT
 3. Click "Load Preset" & select your preset
 4. "Depth of Volume in Atlas" -> size of your LUT (same as you used above. If you forgot - open LUT as image & see its width in px - 32/48/64). Drag Z slider in top-right - should be no vertical movement.
-5. "Save as" (button from bottom-right) -> select .dds file (or type name with .dds)
-6. Put that .dds file in the folder that was generated after you exported the XBM file at the start of the article.
+5. "Save as" (button from bottom-right) -> select `.dds` file (or type name with `.dds`)
+6. Put that `.dds` file in "source" folder of your WolvenKit project
 
 ---
 
 With no preset:
 
-1. Open NVDA tool & load your LUT
+1. Open NVTT & load your LUT
 2. "Format" -> 32x4f
 3. "Extract From Atlas" -> on
 4. "Depth of Volume in Atlas" -> size of your LUT (same as you used above. If you forgot - open LUT as image & see its width in px - 32/48/64). Drag Z slider in top-right - should be no vertical movement.
@@ -188,24 +188,36 @@ With no preset:
 6. "Compression Effort" -> "Highest"
 7. "DDS: Use DXT10 Header" -> on
 8. "KTX2: Zstandard Supercompression" -> off
-9. "Save as" (button from bottom-right) -> select .dds file (or type name with .dds)
-10. Put that .dds file in the folder that was generated after you exported the XBM file at the start of the article.
+9. "Save as" (button from bottom-right) -> select `.dds` file (or type name with `.dds`)
+10. Put that `.dds` file in "source" folder of your WolvenKit project
 
 <figure><img src="../../../../.gitbook/assets/image (76).png" alt=""><figcaption><p>NVTT correctly set up with the RCM (Resolve Color Managed) LUT in it.</p></figcaption></figure>
 
 ### WolvenKit again
 
-You should now see it in the import tool in WolvenKit. Change its TextureGroup property to `TEXG_Generic_LUT`, turn off IsGamma, VFlip, GenerateMipMaps, IsStreamable, and PremultiplyAlpha. Set compression to `TCM_None`. If your file doesn't have RawFormat as `TRF_HDRFloat`, then something in the DDS importing went wrong, and you need to re-set the format as 32x4f in NVTT.
+1. In WolvenKit top menu click on "Tools" -> "Import Tool"
+2. Select your LUT `.dds` file
+3. Set "TextureGroup" -> `TEXG_Generic_LUT`,
+4. Uncheck all "IsGamma", "GenerateMipMaps", "IsStreamable", and "PremultiplyAlpha"
+5. Set "Compression" -> `TCM_None`
+
+{% hint style="danger" %}
+If your file doesn't have "RawFormat" as `TRF_HDRFloat`, then something in the DDS importing went wrong, and you need to re-set the format as 32x4f in NVTT.
+{% endhint %}
 
 <figure><img src="../../../../.gitbook/assets/image (87).png" alt=""><figcaption><p>Settings set up correctly.</p></figcaption></figure>
 
-Import the DDS. We need to tell the file it is actually a 3D texture in the header (even if the 3D data is already there), so go to `renderTextureResource>renderResourceBlobPC>header>textureInfo>type` and change it from `TEXTYPE_2D` to `TEXTYPE_3D`.
+6. Import the DDS
+7. Double click on your imported `.xbm` file
+8. Go to `renderTextureResource` -> `renderResourceBlobPC` -> `header` -> `textureInfo` -> `type` & set `TEXTYPE_3D`
 
 <figure><img src="../../../../.gitbook/assets/image (18).png" alt=""><figcaption><p>Changing the texture type.</p></figcaption></figure>
 
-Make a copy of the XBM file and rename it to `cp2077_gen_lut_nge_v017`. Our dummy file there is for being able to quickly copy the filename, so, select your LUT XBM, C-c, C-v, select the dummy file, F2, C-c, select your LUT copy XBM, F2, C-v.
+9. Rename your XBM file to `cp2077_gen_lut_nge_v017.xbm`
+10. Place it in `archive` -> `base` -> `weather` -> `24h_basic` -> `luts` folder
+11. On the top menu, click "Pack Mod". You'll find it in "packed" folder of your WolvenKit project. Install your mod as usual.
 
-Your LUT is now correctly set up. You can install and launch now!
+Your LUT is now correctly set up. You can launch now!
 
 ## Results
 
