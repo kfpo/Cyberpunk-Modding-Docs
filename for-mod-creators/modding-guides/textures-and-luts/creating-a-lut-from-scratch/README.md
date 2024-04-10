@@ -189,17 +189,17 @@ With no preset:
 7. "DDS: Use DXT10 Header" -> on
 8. "KTX2: Zstandard Supercompression" -> off
 9. "Save as" (button from bottom-right) -> select `.dds` file (or type name with `.dds`).
-10. Put that `.dds` file in "source" folder of your WolvenKit project.
 
 <figure><img src="../../../../.gitbook/assets/image (76).png" alt=""><figcaption><p>NVTT correctly set up with the RCM (Resolve Color Managed) LUT in it.</p></figcaption></figure>
 
 ### WolvenKit again
 
-1. In WolvenKit top menu click on "Tools" -> "Import Tool".
-2. Select your LUT `.dds` file.
-3. Set "TextureGroup" -> `TEXG_Generic_LUT`.
-4. Uncheck all "IsGamma", "GenerateMipMaps", "IsStreamable", and "PremultiplyAlpha".
-5. Set "Compression" -> `TCM_None`.
+1. Put that `.dds` file in `source/raw/base/weather/24h_basic/luts` folder of your WolvenKit project & rename it to `cp2077_gen_lut_nge_v017.dds`.
+2. In WolvenKit top menu click on "Tools" -> "Import Tool".
+3. Select your LUT `.dds` file.
+4. Set "TextureGroup" -> `TEXG_Generic_LUT`.
+5. Uncheck all "IsGamma", "GenerateMipMaps", "IsStreamable", and "PremultiplyAlpha".
+6. Set "Compression" -> `TCM_None`.
 
 {% hint style="danger" %}
 If your file doesn't have "RawFormat" as `TRF_HDRFloat`, then something in the DDS importing went wrong, and you need to re-set the format as 32x4f in NVTT.
@@ -207,15 +207,13 @@ If your file doesn't have "RawFormat" as `TRF_HDRFloat`, then something in the D
 
 <figure><img src="../../../../.gitbook/assets/image (87).png" alt=""><figcaption><p>Settings set up correctly.</p></figcaption></figure>
 
-6. Import the DDS.
-7. Double click on your imported `.xbm` file.
-8. Go to `renderTextureResource` -> `renderResourceBlobPC` -> `header` -> `textureInfo` -> `type` & set `TEXTYPE_3D`.
+7. Click "Import Selected".
+8. Double click on your imported `.xbm` file.
+9. Go to `renderTextureResource` -> `renderResourceBlobPC` -> `header` -> `textureInfo` -> `type` & set `TEXTYPE_3D`.
 
 <figure><img src="../../../../.gitbook/assets/image (18).png" alt=""><figcaption><p>Changing the texture type.</p></figcaption></figure>
 
-9. Rename your XBM file to `cp2077_gen_lut_nge_v017.xbm`.
-10. Place it in `archive/base/weather/24h_basic/luts` folder.
-11. On the top menu, click "Pack Mod". You'll find `.zip` file in your project folder of your WolvenKit project (or use one from "packed" folder). Install your mod as usual.
+10. On the top menu, click "Pack Mod". You'll find `.zip` file in your project folder of your WolvenKit project (or use one from "packed" folder). Install your mod as usual.
 
 Your LUT is correctly set up now. You can launch & try!
 
