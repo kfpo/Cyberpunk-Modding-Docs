@@ -23,7 +23,7 @@ Cyberpunk LUTs are distinctly different from ReShade LUTs due to two things:
 
 But, aside from that, they are similar. Any LUT expects an input of a color, with an output of a new color. That's it. Cyberpunk's implementation is as simple as extracting the pixel out of the LUT texture that matches the input color, and if there isn't an exact match, it interpolates linearly to get a near-perfect approximation of the true output color.
 
-&#x20;If you're still confused, I recommend looking at [this](https://reverend-greg.itch.io/lut-colouring-explained).
+If you're still confused, I recommend looking at [this](https://reverend-greg.itch.io/lut-colouring-explained).
 
 ## Prerequisites
 
@@ -35,7 +35,7 @@ You can check out nullfractal's [github template](https://github.com/nullfrctl/R
 
 {% tabs %}
 {% tab title="NVIDIA Texture Tools Exporter" %}
-You can't download the NVIDIA texture tools from the [official website](https://developer.nvidia.com/nvidia-texture-tools-exporter) without an **NVIDIA account** that participates in the **developer program**. We've put a backup of the executable on the wiki's [github repository](../../../../\_resources\_and\_assets/tools/NVIDIA\_Texture\_Tools\_2023.2.0.zip) — you need to decide which is the lesser evil, yet another account or downloading a random .exe from the internet.
+You can't download the NVIDIA texture tools from the [official website](https://developer.nvidia.com/nvidia-texture-tools-exporter) without an **NVIDIA account** that participates in the **developer program**. We've put a backup of the executable on the wiki's [github repository](../../../../_resources_and_assets/tools/NVIDIA_Texture_Tools_2023.2.0.zip) — you need to decide which is the lesser evil, yet another account or downloading a random .exe from the internet.
 {% endtab %}
 
 {% tab title="DaVinci Resolve" %}
@@ -67,13 +67,22 @@ Create a new project in WolvenKit and import the file `base\weather\24h_basic\lu
 If you have issues getting Resolve to run for the first time, uninstall the panels program. It causes crashes if you don't have any DaVinci panels or sliders.
 {% endhint %}
 
-Create a Resolve project, and head straight over to the Fusion tab, without importing any media. Add a LUT Cube Creator node, change the type to vertical and size to 32, 48, or 64. Remember this number, as you will use it later. Select for the generated Media Out node to output to both sides of the preview by enabling both of the circles below it. On one of the sides, select Views>3D Histogram. You should now have a LUT cube present. If you'd like more accuracy, right click and go to 3D Histogram and select solid with 1:1 sampling.
+1. Create a Resolve project
+2. Go to "Fusion" tab from the bottom pane without importing any media
+3. Right click at the "Nodes" bottom pane & add select "Add Tool" -> "LUT" -> "LUT Cube Creator"
+4. Select "LUTCubeCreator1" node. On the "Inspector" right pane change the "Type" to "Vertical" and "Size" to 32, 48, or 64. Remember this number, as you will use it later.
+5. On the "Nodes" pane, hover on "MediaOut1" node & click on both circles below.
+6. On one of the sides, right click & select "Views" -> "3D Histogram". You should now have a LUT cube present.
+7. If you'd like more accuracy, right click and go to "3D Histogram" and select "Solid", then select "Sampling" -> 1:1.
 
 <figure><img src="../../../../.gitbook/assets/image (62).png" alt=""><figcaption><p>An example to show the current workspace should look like.</p></figcaption></figure>
 
-Right after the LUT Cube Creator node, add a Color Space Transform node, and matching the fact that tools expect ARRI Wide Gamut 3 with ARRI LogC3 data, but the game outputs sRGB with ARRI LogC3 gamma, we need to go from sRGB color space with ARRI LogC3 gamma to an output color space of ARRI Wide Gamut 3 with output gamma of ARRI LogC3
+8. On the "Nodes" pane right click and select "Add Tool" -> "Color" -> "ColorFX" -> "Color Space Transform" node. Set this node after "LUT Cube Creator" node.
+9. Select "ColorSpaceTransform1" node. On the "Inspector" pane select these values:
 
 <figure><img src="../../../../.gitbook/assets/image (106).png" alt=""><figcaption><p>Settings for the Color Space Transform node.</p></figcaption></figure>
+
+(because tools expect ARRI Wide Gamut 3 with ARRI LogC3 data, but the game outputs sRGB with ARRI LogC3 gamma, so we need to go from sRGB color space with ARRI LogC3 gamma to an output color space of ARRI Wide Gamut 3 with output gamma of ARRI LogC3).
 
 After this, we need to go from this LogC3 data to sRGB, which is what our display expects.
 
@@ -93,7 +102,7 @@ This method uses LUTs from ARRI themselves, and as such gives us two options: Lo
 
 In the link above, select LogC wide gamut as the source format and destination format as video. Select your preference of ARRI Classic 709 and ARRI 709 in the conversion parameter. The file type can be either Blackmagic Fusion or Blackmagic DaVinci Resolve, it really doesn't matter.
 
-Add a serial File LUT node and point to your downloaded file.&#x20;
+Add a serial File LUT node and point to your downloaded file.
 
 <figure><img src="../../../../.gitbook/assets/image (93).png" alt=""><figcaption><p>The workspace after following the directions for the LogC3 method.</p></figcaption></figure>
 
@@ -125,17 +134,19 @@ Instead of having an output color space of ARRI Wide Gamut 3, set the color spac
 
 <figure><img src="../../../../.gitbook/assets/image (34).png" alt=""><figcaption><p>Your workspace after this method. It's easy and minimal, but has very low contrast.</p></figcaption></figure>
 
-This method creates a color cube that is very "unbiased"--it has fidelity in all directions, which, while creating a good representation of true color, can result in unnatural saturation. To account for this, the saturation compression gamut compression method can be selected.&#x20;
+This method creates a color cube that is very "unbiased"--it has fidelity in all directions, which, while creating a good representation of true color, can result in unnatural saturation. To account for this, the saturation compression gamut compression method can be selected.
 
 <figure><img src="../../../../.gitbook/assets/image (30).png" alt=""><figcaption><p>The color cube after saturation compression.</p></figcaption></figure>
 
-After you have used your preferred method, you need to apply gamma correction. If you do not do this, you end up with incorrect gamma, which can mainly be seen on skin tones.&#x20;
+#### For all methods
+
+After you have used your preferred method, you need to apply gamma correction. If you do not do this, you end up with incorrect gamma, which can mainly be seen on skin tones.
 
 For the ACES method, you need to add another Color Space Transform node, with input color space and gamma of sRGB, with the output color space of sRGB but output gamma of linear.
 
 <figure><img src="../../../../.gitbook/assets/image (6) (1).png" alt=""><figcaption><p>ACES method after gamma correction.</p></figcaption></figure>
 
-For both ARRI methods, nearly the exact same steps are taken as the ACES method, but, instead of sRGB input color space and gamma, we use an input color space of Rec.709, but input gamma of Gamma 2.4. Keep the output color space at sRGB and output gamma at linear.&#x20;
+For both ARRI methods, nearly the exact same steps are taken as the ACES method, but, instead of sRGB input color space and gamma, we use an input color space of Rec.709, but input gamma of Gamma 2.4. Keep the output color space at sRGB and output gamma at linear.
 
 <figure><img src="../../../../.gitbook/assets/image (45).png" alt=""><figcaption><p>LogC4 after gamma correction.</p></figcaption></figure>
 
@@ -153,18 +164,19 @@ With preset:
 
 1. Create text file, then open & paste this:
 
-    ```
-    --format rgba32f --quality highest --no-mips --dxt10 --extract-from-atlas --atlas-depth 64
-    ```
+   ```
+   --format rgba32f --quality highest --no-mips --dxt10 --extract-from-atlas --atlas-depth 64
+   ```
 
-    Save & change (rename) file's extension to `.dpf`
+   Save & change (rename) file's extension to `.dpf`
+
 2. Open NVDA tool & load your LUT
 3. Click "Load Preset" & select your preset
 4. "Depth of Volume in Atlas" -> size of your LUT (same as you used above. If you forgot - open LUT as image & see its width in px - 32/48/64). Drag Z slider in top-right - should be no vertical movement.
 5. "Save as" (button from bottom-right) -> select .dds file (or type name with .dds)
 6. Put that .dds file in the folder that was generated after you exported the XBM file at the start of the article.
 
-- - -
+---
 
 With no preset:
 
@@ -201,15 +213,9 @@ Your LUT is now correctly set up. You can install and launch now!
 
 <figure><img src="../../../../.gitbook/assets/1.png" alt=""><figcaption><p>Vanilla</p></figcaption></figure>
 
-
-
 <figure><img src="../../../../.gitbook/assets/2.png" alt=""><figcaption><p>RCM</p></figcaption></figure>
 
-
-
 <figure><img src="../../../../.gitbook/assets/3.png" alt=""><figcaption><p>ACES</p></figcaption></figure>
-
-
 
 <figure><img src="../../../../.gitbook/assets/4 (1).png" alt=""><figcaption><p>LogC4</p></figcaption></figure>
 
