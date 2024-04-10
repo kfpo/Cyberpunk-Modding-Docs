@@ -149,7 +149,26 @@ Right click on the LUT picture and save your image as a TGA or PNG file.
 
 ### NVIDIA Texture Tools
 
-1. Drag on your exported file onto the NVTT window
+With preset:
+
+1. Create text file, then open & paste this:
+
+    ```
+    --format rgba32f --quality highest --no-mips --dxt10 --extract-from-atlas --atlas-depth 64
+    ```
+
+    Save & change (rename) file's extension to `.dpf`
+2. Open NVDA tool & load your LUT
+3. Click "Load Preset" & select your preset
+4. "Depth of Volume in Atlas" -> size of your LUT (same as you used above. If you forgot - open LUT as image & see its width in px - 32/48/64). Drag Z slider in top-right - should be no vertical movement.
+5. "Save as" (button from bottom-right) -> select .dds file (or type name with .dds)
+6. Put that .dds file in the folder that was generated after you exported the XBM file at the start of the article.
+
+- - -
+
+With no preset:
+
+1. Open NVDA tool & load your LUT
 2. "Format" -> 32x4f
 3. "Extract From Atlas" -> on
 4. "Depth of Volume in Atlas" -> size of your LUT (same as you used above. If you forgot - open LUT as image & see its width in px - 32/48/64). Drag Z slider in top-right - should be no vertical movement.
@@ -182,15 +201,15 @@ Your LUT is now correctly set up. You can install and launch now!
 
 <figure><img src="../../../../.gitbook/assets/1.png" alt=""><figcaption><p>Vanilla</p></figcaption></figure>
 
- 
+
 
 <figure><img src="../../../../.gitbook/assets/2.png" alt=""><figcaption><p>RCM</p></figcaption></figure>
 
- 
+
 
 <figure><img src="../../../../.gitbook/assets/3.png" alt=""><figcaption><p>ACES</p></figcaption></figure>
 
- 
+
 
 <figure><img src="../../../../.gitbook/assets/4 (1).png" alt=""><figcaption><p>LogC4</p></figcaption></figure>
 
