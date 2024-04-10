@@ -142,15 +142,15 @@ This method creates a color cube that is very "unbiased"--it has fidelity in all
 
 After you have used your preferred method, you need to apply gamma correction. If you do not do this, you end up with incorrect gamma, which can mainly be seen on skin tones.
 
-For the __ACES__ method, you need to add another Color Space Transform node, with input color space and gamma of sRGB, with the output color space of sRGB but output gamma of linear.
+For the **ACES** method, you need to add another Color Space Transform node, with input color space and gamma of sRGB, with the output color space of sRGB but output gamma of linear.
 
 <figure><img src="../../../../.gitbook/assets/image (6) (1).png" alt=""><figcaption><p>ACES method after gamma correction.</p></figcaption></figure>
 
-For both __ARRI__ methods, nearly the exact same steps are taken as the __ACES__ method, but, instead of sRGB input color space and gamma, we use an input color space of Rec.709, but input gamma of Gamma 2.4. Keep the output color space at sRGB and output gamma at linear.
+For both **ARRI** methods, nearly the exact same steps are taken as the **ACES** method, but, instead of sRGB input color space and gamma, we use an input color space of Rec.709, but input gamma of Gamma 2.4. Keep the output color space at sRGB and output gamma at linear.
 
 <figure><img src="../../../../.gitbook/assets/image (45).png" alt=""><figcaption><p>LogC4 after gamma correction.</p></figcaption></figure>
 
-For the __Resolve Color Managed__ method, simply change the output gamma in the color space transform to linear, but turn on Apply Forward OOTF.
+For the **Resolve Color Managed** method, simply change the output gamma in the color space transform to linear, but turn on Apply Forward OOTF.
 
 <figure><img src="../../../../.gitbook/assets/image (84).png" alt=""><figcaption><p>Gamma corrected RCM method.</p></figcaption></figure>
 
@@ -171,7 +171,7 @@ With preset:
    Save & change (rename) file's extension to `.dpf`
 
 2. Open NVTT & load your LUT.
-3. Click "Load Preset" & select your preset.
+3. Click "Load Preset" & select your preset. Load preset **after** loading your LUT.
 4. "Depth of Volume in Atlas" -> size of your LUT (same as you used above. If you forgot - open LUT as image & see its width in px - 32/48/64). Drag Z slider in top-right - should be no vertical movement.
 5. "Save as" (button from bottom-right) -> select `.dds` file (or type name with `.dds`).
 6. Put that `.dds` file in "source" folder of your WolvenKit project.
