@@ -67,10 +67,10 @@ Create a new project in WolvenKit and import the file `base\weather\24h_basic\lu
 If you have issues getting Resolve to run for the first time, uninstall the panels program. It causes crashes if you don't have any DaVinci panels or sliders.
 {% endhint %}
 
-1. Create a Resolve project
-2. Go to "Fusion" tab from the bottom pane without importing any media
-3. Right click at the "Nodes" bottom pane & add select "Add Tool" -> "LUT" -> "LUT Cube Creator"
-4. Select "LUTCubeCreator1" node. On the "Inspector" right pane change the "Type" to "Vertical" and "Size" to 32, 48, or 64. Remember this number, as you will use it later.
+1. Create a DaVinci Resolve project.
+2. Go to "Fusion" tab at the bottom pane without importing any media.
+3. Right click at the "Nodes" bottom pane & select "Add Tool" -> "LUT" -> "LUT Cube Creator"
+4. Click on "LUTCubeCreator1" node. From the "Inspector" right pane, change the "Type" to "Vertical" and "Size" to 32, 48, or 64. Remember this number, as you will use it later.
 5. On the "Nodes" pane, hover on "MediaOut1" node & click on both circles below.
 6. On one of the sides, right click & select "Views" -> "3D Histogram". You should now have a LUT cube present.
 7. If you'd like more accuracy, right click and go to "3D Histogram" and select "Solid", then select "Sampling" -> 1:1.
@@ -142,19 +142,19 @@ This method creates a color cube that is very "unbiased"--it has fidelity in all
 
 After you have used your preferred method, you need to apply gamma correction. If you do not do this, you end up with incorrect gamma, which can mainly be seen on skin tones.
 
-For the ACES method, you need to add another Color Space Transform node, with input color space and gamma of sRGB, with the output color space of sRGB but output gamma of linear.
+For the __ACES__ method, you need to add another Color Space Transform node, with input color space and gamma of sRGB, with the output color space of sRGB but output gamma of linear.
 
 <figure><img src="../../../../.gitbook/assets/image (6) (1).png" alt=""><figcaption><p>ACES method after gamma correction.</p></figcaption></figure>
 
-For both ARRI methods, nearly the exact same steps are taken as the ACES method, but, instead of sRGB input color space and gamma, we use an input color space of Rec.709, but input gamma of Gamma 2.4. Keep the output color space at sRGB and output gamma at linear.
+For both __ARRI__ methods, nearly the exact same steps are taken as the __ACES__ method, but, instead of sRGB input color space and gamma, we use an input color space of Rec.709, but input gamma of Gamma 2.4. Keep the output color space at sRGB and output gamma at linear.
 
 <figure><img src="../../../../.gitbook/assets/image (45).png" alt=""><figcaption><p>LogC4 after gamma correction.</p></figcaption></figure>
 
-For the Resolve Color Managed method, simply change the output gamma in the color space transform to linear, but turn on Apply Forward OOTF.
+For the __Resolve Color Managed__ method, simply change the output gamma in the color space transform to linear, but turn on Apply Forward OOTF.
 
 <figure><img src="../../../../.gitbook/assets/image (84).png" alt=""><figcaption><p>Gamma corrected RCM method.</p></figcaption></figure>
 
-This is the final stage. We now just need to output to an image, and use the right format. To do this, use a Resolve FX Transform>Transform node (not any other transform node) and switch on "Flip Vertical" to correctly output.
+This is the final stage. Add another node - "Add Tool" -> "Resolve FX Transform -> "Transform" (not any other transform node) and switch on "Flip Vertical" on the right pane for correct output.
 
 Right click on the LUT picture and save your image as a TGA or PNG file.
 
@@ -170,17 +170,17 @@ With preset:
 
    Save & change (rename) file's extension to `.dpf`
 
-2. Open NVTT & load your LUT
-3. Click "Load Preset" & select your preset
+2. Open NVTT & load your LUT.
+3. Click "Load Preset" & select your preset.
 4. "Depth of Volume in Atlas" -> size of your LUT (same as you used above. If you forgot - open LUT as image & see its width in px - 32/48/64). Drag Z slider in top-right - should be no vertical movement.
-5. "Save as" (button from bottom-right) -> select `.dds` file (or type name with `.dds`)
-6. Put that `.dds` file in "source" folder of your WolvenKit project
+5. "Save as" (button from bottom-right) -> select `.dds` file (or type name with `.dds`).
+6. Put that `.dds` file in "source" folder of your WolvenKit project.
 
 ---
 
 With no preset:
 
-1. Open NVTT & load your LUT
+1. Open NVTT & load your LUT.
 2. "Format" -> 32x4f
 3. "Extract From Atlas" -> on
 4. "Depth of Volume in Atlas" -> size of your LUT (same as you used above. If you forgot - open LUT as image & see its width in px - 32/48/64). Drag Z slider in top-right - should be no vertical movement.
@@ -188,18 +188,18 @@ With no preset:
 6. "Compression Effort" -> "Highest"
 7. "DDS: Use DXT10 Header" -> on
 8. "KTX2: Zstandard Supercompression" -> off
-9. "Save as" (button from bottom-right) -> select `.dds` file (or type name with `.dds`)
-10. Put that `.dds` file in "source" folder of your WolvenKit project
+9. "Save as" (button from bottom-right) -> select `.dds` file (or type name with `.dds`).
+10. Put that `.dds` file in "source" folder of your WolvenKit project.
 
 <figure><img src="../../../../.gitbook/assets/image (76).png" alt=""><figcaption><p>NVTT correctly set up with the RCM (Resolve Color Managed) LUT in it.</p></figcaption></figure>
 
 ### WolvenKit again
 
-1. In WolvenKit top menu click on "Tools" -> "Import Tool"
-2. Select your LUT `.dds` file
-3. Set "TextureGroup" -> `TEXG_Generic_LUT`,
-4. Uncheck all "IsGamma", "GenerateMipMaps", "IsStreamable", and "PremultiplyAlpha"
-5. Set "Compression" -> `TCM_None`
+1. In WolvenKit top menu click on "Tools" -> "Import Tool".
+2. Select your LUT `.dds` file.
+3. Set "TextureGroup" -> `TEXG_Generic_LUT`.
+4. Uncheck all "IsGamma", "GenerateMipMaps", "IsStreamable", and "PremultiplyAlpha".
+5. Set "Compression" -> `TCM_None`.
 
 {% hint style="danger" %}
 If your file doesn't have "RawFormat" as `TRF_HDRFloat`, then something in the DDS importing went wrong, and you need to re-set the format as 32x4f in NVTT.
@@ -207,17 +207,17 @@ If your file doesn't have "RawFormat" as `TRF_HDRFloat`, then something in the D
 
 <figure><img src="../../../../.gitbook/assets/image (87).png" alt=""><figcaption><p>Settings set up correctly.</p></figcaption></figure>
 
-6. Import the DDS
-7. Double click on your imported `.xbm` file
-8. Go to `renderTextureResource` -> `renderResourceBlobPC` -> `header` -> `textureInfo` -> `type` & set `TEXTYPE_3D`
+6. Import the DDS.
+7. Double click on your imported `.xbm` file.
+8. Go to `renderTextureResource` -> `renderResourceBlobPC` -> `header` -> `textureInfo` -> `type` & set `TEXTYPE_3D`.
 
 <figure><img src="../../../../.gitbook/assets/image (18).png" alt=""><figcaption><p>Changing the texture type.</p></figcaption></figure>
 
-9. Rename your XBM file to `cp2077_gen_lut_nge_v017.xbm`
-10. Place it in `archive/base/weather/24h_basic/luts` folder
+9. Rename your XBM file to `cp2077_gen_lut_nge_v017.xbm`.
+10. Place it in `archive/base/weather/24h_basic/luts` folder.
 11. On the top menu, click "Pack Mod". You'll find it in "packed" folder of your WolvenKit project. Install your mod as usual.
 
-Your LUT is now correctly set up. You can launch now!
+Your LUT is correctly set up now. You can launch & try!
 
 ## Results
 
